@@ -3,16 +3,9 @@ from supabase import create_client, Client
 from dotenv import load_dotenv
 load_dotenv()
 
-url: str = os.environ.get('SUPABASE_URL')
-key: str = os.environ.get('SUPABASE_KEY')
-
-if not url:
-    raise ConnectionError('No se ha colocado la url de la base de datos.')
-
-if not key:
-    raise ConnectionError('No se ha colocado la API key de la base de datos.')
-
 try:
+    url: str = os.environ.get('SUPABASE_URL')
+    key: str = os.environ.get('SUPABASE_KEY')
     supabase: Client = create_client(url, key)
 except Exception as e:
     print(f"Error al inicializar el cliente de Supabase: {e}")
@@ -20,7 +13,7 @@ except Exception as e:
 
 #Tabla de productos
 
-def new_id():
+def new_products_id():
     id_data = supabase.table("productos").select("id_producto").order("id_producto", desc=True).limit(1).execute()
 
     if len(id_data.data) == 0:
@@ -29,7 +22,7 @@ def new_id():
         lates_id = id_data.data[0]["id_producto"]
         return lates_id + 1 
 
-def create_data():
+def create_products_data():
     print('---------- Registrando producto ----------')
 
     while True:
@@ -74,9 +67,9 @@ def create_data():
         else: 
             break
 
-    supabase.table('productos').insert({'id_producto': new_id(),'id_categoria': category,'id_compañía': company,'nombre_producto': name, 'peso_producto_gramos': weight,'cantidad_stock': stock, 'fecha_exp': exp_date}).execute()
+    supabase.table('productos').insert({'id_producto': new_products_id(),'id_categoria': category,'id_compañía': company,'nombre_producto': name, 'peso_producto_gramos': weight,'cantidad_stock': stock, 'fecha_exp': exp_date}).execute()
 
-def read_data():
+def read_products_data():
     print('---------- Productos ----------')
 
     data_select = supabase.table('productos').select('*').execute()
@@ -86,7 +79,7 @@ def read_data():
     else:
         print(data_select)
 
-def update_data():
+def update_products_data():
     print('---------- Actualizando registro ----------')
 
     while True:
@@ -140,7 +133,7 @@ def update_data():
 
     supabase.table('productos').update({'id_categoria': new_category,'id_compañía': new_company, 'nombre_producto': new_name, 'peso_producto_gramos': new_weight,'cantidad_stock': new_stock,'fecha_exp': new_exp_date}).eq('id_producto', id_to_update).execute()
 
-def delete_data():
+def delete_products_data():
     print('---------- Eliminando producto ----------')
 
     while True:
@@ -194,13 +187,13 @@ def menu():
         selection = int(input('Por favor seleccione un opción: '))
 
         if selection == 1:
-            create_data()
+            create_products_data()
         elif selection == 2:
-            read_data()
+            read_products_data()
         elif selection == 3:
-            update_data()
+            update_products_data()
         elif selection == 4:
-            delete_data()
+            delete_products_data()
         elif selection == 5:
             print('-' * 60)
             print('Gracias por utilizar nuestros servicios, hasta la próxima.')
