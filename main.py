@@ -7,11 +7,16 @@ url: str = os.environ.get('SUPABASE_URL')
 key: str = os.environ.get('SUPABASE_KEY')
 
 if not url:
-    raise ConnectionError('No se ha colocado la url de la base de datos Todo-App.')
-elif not key:
-    raise ConnectionError('No se ha colocado la API key de la base de datos Todo-App.')
+    raise ConnectionError('No se ha colocado la url de la base de datos.')
 
-supabase: Client = create_client(url, key)
+if not key:
+    raise ConnectionError('No se ha colocado la API key de la base de datos.')
+
+try:
+    supabase: Client = create_client(url, key)
+except Exception as e:
+    print(f"Error al inicializar el cliente de Supabase: {e}")
+    exit(1)
 
 #Tabla de productos
 
@@ -28,6 +33,20 @@ def create_data():
     print('---------- Registrando producto ----------')
 
     while True:
+        category = int(input('ID de la categoría del producto: '))
+        if not category:
+            print('Debe insertar la categoría obligatoriamente.')
+        else: 
+            break
+
+    while True:
+        company = int(input('ID de la compañía del producto: '))
+        if not company:
+            print('Debe insertar la compañía obligatoriamente.')
+        else: 
+            break
+
+    while True:
         name = input('Nombre del producto: ').strip()
         if not name:
             print('Debe insertar el nombre obligatoriamente.')
@@ -42,13 +61,20 @@ def create_data():
             break
 
     while True:
+        stock = int(input('Cantidad del producto: '))
+        if not stock:
+            print('Debe insertar la cantidad obligatoriamente.')
+        else: 
+            break
+
+    while True:
         exp_date = int(input('Fecha de expiración: '))
         if not exp_date:
             print('Debe insertar la feca obligatoriamente.')
         else: 
             break
 
-    supabase.table('productos').insert({'id_producto': new_id(), 'nombre_producto': name, 'peso_producto_gramos': weight, 'fecha_exp': exp_date}).execute()
+    supabase.table('productos').insert({'id_producto': new_id(),'id_categoria': category,'id_compañía': company,'nombre_producto': name, 'peso_producto_gramos': weight,'cantidad_stock': stock, 'fecha_exp': exp_date}).execute()
 
 def read_data():
     print('---------- Productos ----------')
@@ -64,23 +90,47 @@ def update_data():
     print('---------- Actualizando registro ----------')
 
     while True:
+        new_category = int(input('ID de la nueva categoría del producto: '))
+        if not new_category:
+            print('Debe insertar la categoría obligatoriamente.')
+        else: 
+            break
+
+    while True:
+        new_company = int(input('ID de la nueva compañía del producto: '))
+        if not new_company:
+            print('Debe insertar la compañía obligatoriamente.')
+        else: 
+            break
+    
+    while True:
         id_to_update = int(input('ID del producto: '))
         if not id_to_update:
             print('Debe insertar un id obligatoriamente.')
         else:
             break
+
     while True: 
         new_name = input('Nuevo nombre del producto: ').strip()
         if not new_name:
             print('Debe insertar el nombre obligatoriamente.')
         else:
             break
+
     while True:
         new_weight = int(input('Nuevo peso del producto (en gramos): '))
         if not new_weight:
             print('Debe insertar el peso obligatoriamente.')
         else:
             break
+    
+    while True:
+        new_stock = int(input('Nueva cantidad del producto: '))
+        if not new_stock:
+            print('Debe insertar la cantidad obligatoriamente.')
+        else: 
+            break
+    
     while True:
         new_exp_date = int(input('Nueva fecha de expiración: '))
         if not new_exp_date:
@@ -88,7 +138,7 @@ def update_data():
         else: 
             break
 
-    supabase.table('productos').update({'nombre_producto': new_name, 'peso_producto_gramos': new_weight, 'fecha_exp': new_exp_date}).eq('id_producto', id_to_update).execute()
+    supabase.table('productos').update({'id_categoria': new_category,'id_compañía': new_company, 'nombre_producto': new_name, 'peso_producto_gramos': new_weight,'cantidad_stock': new_stock,'fecha_exp': new_exp_date}).eq('id_producto', id_to_update).execute()
 
 def delete_data():
     print('---------- Eliminando producto ----------')
@@ -97,22 +147,35 @@ def delete_data():
         check = input('¿Esta seguro(a) de querer eliminar un produto? (si/no) ')
 
         if check == 'no':
+            print('Operación cancelada.')
+            return
+        elif check == 'si':
             break
         else:
+            print('Respuesta no válida. Por favor, introduzca "si" o "no".')
+
+    while True:
+        id_to_delete = input('ID del producto: ')
+
+        if not id_to_delete:
+            print('Debe insertar un id obligatoriamente.')
+        else:
             while True:
-                id_to_delete = input('ID del producto: ')
+                double_check = input('¿Estas seguro(a) de querer elilminar este producto? (si/no) ')
 
-                if not id_to_delete:
-                    print('Debe insertar un id obligatoriamente.')
+                if double_check == 'no':
+                    print('Doble verificación cancelada. Volviendo a la entrada del ID.')
+                    break
+                elif double_check == 'si':
+                    try:
+                        supabase.table('productos').delete().eq('id_producto', id_to_delete).execute()
+
+                        print(f'Producto con ID {id_to_delete} eliminado con éxito.')
+                    except Exception as e:
+                         print(f'Ocurrió un error al eliminar el producto: {e}')
+                    return
                 else:
-                    double_check = input('¿Estas seguro de querer elilminar este producto? si/no ')
-
-                    if double_check == 'no':
-                        break
-                    else:
-                        while True:
-                            supabase.table('productos').delete().eq('id_producto', id_to_delete).execute()
-                            break
+                   print('Respuesta no válida. Por favor, introduzca "si" o "no".')
 
 def menu():
     print('-' * 60)
