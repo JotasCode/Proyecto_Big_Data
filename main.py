@@ -11,6 +11,210 @@ except Exception as e:
     print(f"Error al inicializar el cliente de Supabase: {e}")
     exit(1)
 
+#Tabla de comapñías
+
+def new_companys_id():
+    id_data = supabase.table("compañias").select("id_compañia").order("id_compañia", desc=True).limit(1).execute()
+
+    if len(id_data.data) == 0:
+        return 1  
+    else:
+        lates_id = id_data.data[0]["id_compañia"]
+        return lates_id + 1 
+
+def create_companys_data():
+    print('---------- Registrando copañía ----------')
+
+    while True:
+        name = input('Nombre de la compañía: ').strip()
+        if not name:
+            print('Debe insertar el nombre obligatoriamente.')
+        else:
+            break
+    
+    try:
+        supabase.table('compañias').insert({'id_compañia': new_companys_id(),'nombre_compañia': name}).execute()
+
+        print(f'Compañía {name} creada con éxito.')
+    except Exception as e:
+        print(f'Ocurrió un error al intentar crear la compañía: {e}.')
+
+def read_companys_data():
+    print('---------- Compañías ----------')
+
+    try:
+        data_select = supabase.table('compañias').select('*').execute()
+
+        if data_select.data == []:
+            print('No hay compañías registradas.')
+        else:
+            print(data_select)
+    except Exception as e:
+        print(f'Ocurrió un error al intentar ver las compañías registradas: {e}')
+
+def update_companys_data():
+    print('---------- Editando registro ----------')
+    
+    while True:
+        id_to_update = int(input('ID de la compañía: '))
+        if not id_to_update:
+            print('Debe insertar un id obligatoriamente.')
+        else:
+            break
+
+    while True: 
+        new_name = input('Nuevo nombre de la compañía: ').strip()
+        if not new_name:
+            print('Debe insertar el nombre obligatoriamente.')
+        else:
+            break
+
+    try:
+        supabase.table('compañias').update({'nombre_compañia': new_name}).eq('id_compañia', id_to_update).execute()
+
+        print(f'Compañía con el ID: {id_to_update} editada con éxito.')
+    except Exception as e:
+        print(f'Ocurrió un error al intentar editar la compañía: {e}.')
+
+def delete_companys_data():
+    print('---------- Eliminando compañia ----------')
+
+    while True:
+        check = input('¿Esta seguro(a) de querer eliminar una compañia? (si/no) ')
+
+        if check == 'no':
+            print('Operación cancelada.')
+            return
+        elif check == 'si':
+            break
+        else:
+            print('Respuesta no válida. Por favor introduzca "si" o "no".')
+
+    while True:
+        id_to_delete = input('ID de la compañía: ')
+
+        if not id_to_delete:
+            print('Debe insertar un id obligatoriamente.')
+        else:
+            while True:
+                double_check = input('¿Esta seguro(a) de querer elilminar esta compañía? (si/no) ')
+
+                if double_check == 'no':
+                    print('Doble verificación cancelada. Volviendo a la entrada del ID.')
+                    break
+                elif double_check == 'si':
+                    try:
+                        supabase.table('compañias').delete().eq('id_compañia', id_to_delete).execute()
+
+                        print(f'Compañía con el ID: {id_to_delete} eliminada con éxito.')
+                    except Exception as e:
+                         print(f'Ocurrió un error al intentar eliminar la compañía: {e}.')
+                    return
+                else:
+                   print('Respuesta no válida. Por favor, introduzca "si" o "no".')
+
+#Tabla de categorías
+
+def new_categorys_id():
+    id_data = supabase.table("categorias").select("id_categoria").order("id_categoria", desc=True).limit(1).execute()
+
+    if len(id_data.data) == 0:
+        return 1  
+    else:
+        lates_id = id_data.data[0]["id_categoria"]
+        return lates_id + 1 
+
+def create_categorys_data():
+    print('---------- Registrando categoría ----------')
+
+    while True:
+        name = input('Nombre de la categoría: ').strip()
+        if not name:
+            print('Debe insertar el nombre obligatoriamente.')
+        else:
+            break
+    
+    try:
+        supabase.table('categorias').insert({'id_categoria': new_categorys_id(),'nombre_categoria': name}).execute()
+
+        print(f'Categoría {name} creada con éxito.')
+    except Exception as e:
+        print(f'Ocurrió un error al intentar crear la categoría: {e}.')
+
+def read_categorys_data():
+    print('---------- Categorías ----------')
+
+    try:
+        data_select = supabase.table('categorias').select('*').execute()
+
+        if data_select.data == []:
+            print('No hay categorías registradas.')
+        else:
+            print(data_select)
+    except Exception as e:
+        print(f'Ocurrió un error al intentar ver las categorías registradas: {e}')
+
+def update_categorys_data():
+    print('---------- Editando categoría ----------')
+    
+    while True:
+        id_to_update = int(input('ID de la categoría: '))
+        if not id_to_update:
+            print('Debe insertar un id obligatoriamente.')
+        else:
+            break
+
+    while True: 
+        new_name = input('Nuevo nombre de la categoría: ').strip()
+        if not new_name:
+            print('Debe insertar el nombre obligatoriamente.')
+        else:
+            break
+
+    try:
+        supabase.table('categorias').update({'nombre_categoria': new_name}).eq('id_categoria', id_to_update).execute()
+
+        print(f'Categoría con el ID: {id_to_update} editada con éxito.')
+    except Exception as e:
+        print(f'Ocurrió un error al intentar editar la categoría: {e}.')
+
+def delete_categorys_data():
+    print('---------- Eliminando categoría ----------')
+
+    while True:
+        check = input('¿Esta seguro(a) de querer eliminar una categoría? (si/no) ')
+
+        if check == 'no':
+            print('Operación cancelada.')
+            return
+        elif check == 'si':
+            break
+        else:
+            print('Respuesta no válida. Por favor introduzca "si" o "no".')
+
+    while True:
+        id_to_delete = input('ID de la categoría: ')
+
+        if not id_to_delete:
+            print('Debe insertar un id obligatoriamente.')
+        else:
+            while True:
+                double_check = input('¿Esta seguro(a) de querer elilminar esta categoría? (si/no) ')
+
+                if double_check == 'no':
+                    print('Doble verificación cancelada. Volviendo a la entrada del ID.')
+                    break
+                elif double_check == 'si':
+                    try:
+                        supabase.table('categorias').delete().eq('id_categoria', id_to_delete).execute()
+
+                        print(f'Categoría con el ID: {id_to_delete} eliminada con éxito.')
+                    except Exception as e:
+                         print(f'Ocurrió un error al intentar eliminar la categoría: {e}.')
+                    return
+                else:
+                   print('Respuesta no válida. Por favor, introduzca "si" o "no".')
+
 #Tabla de productos
 
 def new_products_id():
@@ -66,21 +270,28 @@ def create_products_data():
             print('Debe insertar la feca obligatoriamente.')
         else: 
             break
+    try:
+        supabase.table('productos').insert({'id_producto': new_products_id(),'id_categoria': category,'id_compañia': company,'nombre_producto': name, 'peso_producto_gramos': weight,'cantidad_stock': stock, 'fecha_exp': exp_date}).execute()
 
-    supabase.table('productos').insert({'id_producto': new_products_id(),'id_categoria': category,'id_compañía': company,'nombre_producto': name, 'peso_producto_gramos': weight,'cantidad_stock': stock, 'fecha_exp': exp_date}).execute()
+        print(f'Producto {name} credo con éxito.')
+    except Exception as e:
+        print(f'Ocurrió un error al intentar crear el producto: {e}.')
 
 def read_products_data():
     print('---------- Productos ----------')
 
-    data_select = supabase.table('productos').select('*').execute()
+    try:
+        data_select = supabase.table('productos').select('*').execute()
 
-    if data_select.data == []:
-        print('No hay productos registrados.')
-    else:
-        print(data_select)
+        if data_select.data == []:
+            print('No hay productos registrados.')
+        else:
+            print(data_select)
+    except Exception as e:
+        print(f'Ocurrió un error al intentar ver los productos registrados: {e}')
 
 def update_products_data():
-    print('---------- Actualizando registro ----------')
+    print('---------- Editando registro ----------')
 
     while True:
         new_category = int(input('ID de la nueva categoría del producto: '))
@@ -130,8 +341,12 @@ def update_products_data():
             print('Debe insertar la fecha obligatoriamente.')
         else: 
             break
+    try:
+        supabase.table('productos').update({'id_categoria': new_category,'id_compañía': new_company, 'nombre_producto': new_name, 'peso_producto_gramos': new_weight,'cantidad_stock': new_stock,'fecha_exp': new_exp_date}).eq('id_producto', id_to_update).execute()
 
-    supabase.table('productos').update({'id_categoria': new_category,'id_compañía': new_company, 'nombre_producto': new_name, 'peso_producto_gramos': new_weight,'cantidad_stock': new_stock,'fecha_exp': new_exp_date}).eq('id_producto', id_to_update).execute()
+        print(f'Producto con el ID: {id_to_update} editado con éxito.')
+    except Exception as e:
+        print(f'Ocurrió un error al intentar editar el producto: {e}.')
 
 def delete_products_data():
     print('---------- Eliminando producto ----------')
@@ -163,12 +378,14 @@ def delete_products_data():
                     try:
                         supabase.table('productos').delete().eq('id_producto', id_to_delete).execute()
 
-                        print(f'Producto con ID {id_to_delete} eliminado con éxito.')
+                        print(f'Producto con el ID {id_to_delete} eliminado con éxito.')
                     except Exception as e:
-                         print(f'Ocurrió un error al eliminar el producto: {e}')
+                         print(f'Ocurrió un error al intentar eliminar el producto: {e}')
                     return
                 else:
                    print('Respuesta no válida. Por favor, introduzca "si" o "no".')
+
+#Menú
 
 def menu():
     print('-' * 60)
@@ -176,32 +393,122 @@ def menu():
 
     while True:
         print('-' * 60)
-        print('1. Registrar producto.')
-        print('2. Ver productos registrados.')
-        print('3. Alctualizar registro.')
-        print('4. Eliminar producto.')
+        print('---------- Opciones ----------')
         print('-' * 60)
-        print('5. Salir.')
+        print('1. Compañías')
+        print('2. Categorías')
+        print('3. Productos')
+        print('-' * 60)
+        print('4. Salir.')
         print('-' * 60)
 
         selection = int(input('Por favor seleccione un opción: '))
 
         if selection == 1:
-            create_products_data()
+            while True:
+                print('-' * 60)
+                print('---------- Elegiste la opción de Compañías ----------')
+                print('-' * 60)
+                print('1. Registrar compañía.')
+                print('2. Ver compañías registradas.')
+                print('3. Editar registro de compañía.')
+                print('4. Eliminar compañía.')
+                print('-' * 60)
+                print('5. Salir.')
+                print('-' * 60)
+
+                companys_selection = int(input('Por favor seleccione un opción: '))
+
+                if companys_selection == 1:
+                    create_companys_data()
+                elif companys_selection == 2:
+                    read_companys_data()
+                elif companys_selection == 3:
+                    update_companys_data()
+                elif companys_selection == 4:
+                    delete_companys_data()
+                elif companys_selection == 5:
+                    print('-' * 60)
+                    print('Saliendo del registro de compañías.')
+                    print('-' * 60)
+                    break
+                else:
+                    print('-' * 60)
+                    print('Opción invalida. Seleccione el número de la opción que desea elegir.')
+
         elif selection == 2:
-            read_products_data()
+            while True:
+                print('-' * 60)
+                print('---------- Elegiste la opción de Categorías ----------')
+                print('-' * 60)
+                print('1. Registrar categoría.')
+                print('2. Ver categorías registradas.')
+                print('3. Editar registro de categoría.')
+                print('4. Eliminar categoría.')
+                print('-' * 60)
+                print('5. Salir.')
+                print('-' * 60)
+
+                categorys_selection = int(input('Por favor seleccione un opción: '))
+
+                if categorys_selection == 1:
+                    create_categorys_data()
+                elif categorys_selection == 2:
+                    read_categorys_data()
+                elif categorys_selection == 3:
+                    update_categorys_data()
+                elif categorys_selection == 4:
+                    delete_categorys_data()
+                elif categorys_selection == 5:
+                    print('-' * 60)
+                    print('Saliendo del registro de categorías.')
+                    print('-' * 60)
+                    break
+                else:
+                    print('-' * 60)
+                    print('Opción invalida. Seleccione el número de la opción que desea elegir.')
+
         elif selection == 3:
-            update_products_data()
+            while True:
+                print('-' * 60)
+                print('---------- Elegiste la opción de Productos ----------')
+                print('-' * 60)
+                print('1. Registrar producto.')
+                print('2. Ver productos registrados.')
+                print('3. Editar registro.')
+                print('4. Eliminar producto.')
+                print('-' * 60)
+                print('5. Salir.')
+                print('-' * 60)
+
+                products_selection = int(input('Por favor seleccione un opción: '))
+
+                if products_selection == 1:
+                    create_products_data()
+                elif products_selection == 2:
+                    read_products_data()
+                elif products_selection == 3:
+                    update_products_data()
+                elif products_selection == 4:
+                    delete_products_data()
+                elif products_selection == 5:
+                    print('-' * 60)
+                    print('Saliendo del registro de productos.')
+                    print('-' * 60)
+                    break
+                else:
+                    print('-' * 60)
+                    print('Opción invalida. Seleccione el número de la opción que desea elegir.')
+
         elif selection == 4:
-            delete_products_data()
-        elif selection == 5:
             print('-' * 60)
             print('Gracias por utilizar nuestros servicios, hasta la próxima.')
             print('-' * 60)
             break
+
         else:
             print('-' * 60)
-            print('Opción invalida. Seleccione el numero de la opción que desea elegir.')
+            print('Opción invalida. Seleccione el número de la opción que desea elegir.')
 
 if __name__ == '__main__':
     menu()
