@@ -402,9 +402,9 @@ def menu():
         print('4. Salir.')
         print('-' * 60)
 
-        selection = int(input('Por favor seleccione un opción: '))
+        selection = input('Por favor seleccione un opción: ')
 
-        if selection == 1:
+        if selection == '1':
             while True:
                 print('-' * 60)
                 print('---------- Elegiste la opción de Compañías ----------')
@@ -417,17 +417,17 @@ def menu():
                 print('5. Salir.')
                 print('-' * 60)
 
-                companys_selection = int(input('Por favor seleccione un opción: '))
+                companys_selection = input('Por favor seleccione un opción: ')
 
-                if companys_selection == 1:
+                if companys_selection == '1':
                     create_companys_data()
-                elif companys_selection == 2:
+                elif companys_selection == '2':
                     read_companys_data()
-                elif companys_selection == 3:
+                elif companys_selection == '3':
                     update_companys_data()
-                elif companys_selection == 4:
+                elif companys_selection == '4':
                     delete_companys_data()
-                elif companys_selection == 5:
+                elif companys_selection == '5':
                     print('-' * 60)
                     print('Saliendo del registro de compañías.')
                     print('-' * 60)
@@ -436,7 +436,7 @@ def menu():
                     print('-' * 60)
                     print('Opción invalida. Seleccione el número de la opción que desea elegir.')
 
-        elif selection == 2:
+        elif selection == '2':
             while True:
                 print('-' * 60)
                 print('---------- Elegiste la opción de Categorías ----------')
@@ -449,17 +449,17 @@ def menu():
                 print('5. Salir.')
                 print('-' * 60)
 
-                categorys_selection = int(input('Por favor seleccione un opción: '))
+                categorys_selection = input('Por favor seleccione un opción: ')
 
-                if categorys_selection == 1:
+                if categorys_selection == '1':
                     create_categorys_data()
-                elif categorys_selection == 2:
+                elif categorys_selection == '2':
                     read_categorys_data()
-                elif categorys_selection == 3:
+                elif categorys_selection == '3':
                     update_categorys_data()
-                elif categorys_selection == 4:
+                elif categorys_selection == '4':
                     delete_categorys_data()
-                elif categorys_selection == 5:
+                elif categorys_selection == '5':
                     print('-' * 60)
                     print('Saliendo del registro de categorías.')
                     print('-' * 60)
@@ -468,7 +468,7 @@ def menu():
                     print('-' * 60)
                     print('Opción invalida. Seleccione el número de la opción que desea elegir.')
 
-        elif selection == 3:
+        elif selection == '3':
             while True:
                 print('-' * 60)
                 print('---------- Elegiste la opción de Productos ----------')
@@ -481,17 +481,17 @@ def menu():
                 print('5. Salir.')
                 print('-' * 60)
 
-                products_selection = int(input('Por favor seleccione un opción: '))
+                products_selection = input('Por favor seleccione un opción: ')
 
-                if products_selection == 1:
+                if products_selection == '1':
                     create_products_data()
-                elif products_selection == 2:
+                elif products_selection == '2':
                     read_products_data()
-                elif products_selection == 3:
+                elif products_selection == '3':
                     update_products_data()
-                elif products_selection == 4:
+                elif products_selection == '4':
                     delete_products_data()
-                elif products_selection == 5:
+                elif products_selection == '5':
                     print('-' * 60)
                     print('Saliendo del registro de productos.')
                     print('-' * 60)
@@ -500,7 +500,7 @@ def menu():
                     print('-' * 60)
                     print('Opción invalida. Seleccione el número de la opción que desea elegir.')
 
-        elif selection == 4:
+        elif selection == '4':
             print('-' * 60)
             print('Gracias por utilizar nuestros servicios, hasta la próxima.')
             print('-' * 60)
