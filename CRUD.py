@@ -1,20 +1,9 @@
-import os
-from supabase import create_client, Client
-from dotenv import load_dotenv
-load_dotenv()
 from new_id import new_id
-
-try:
-    url: str = os.environ.get('SUPABASE_URL')
-    key: str = os.environ.get('SUPABASE_KEY')
-    supabase: Client = create_client(url, key)
-except Exception as e:
-    print(f"Error al inicializar el cliente de Supabase: {e}")
-    exit(1)
+from spb_con import supabase
 
 #FUNCIÓN PARA CREAR
 def create_data(table_name, table_id, table_column):
-    print(f'---------- Registrando fila en {table_name}----------')
+    print(f'---------- Registrando fila en {table_name} ----------')
 
     if table_name != 'productos':
         while True:
@@ -30,13 +19,17 @@ def create_data(table_name, table_id, table_column):
             print(f'Fila con el nombre {name} creada con éxito.')
         except Exception as e:
             print(f'Ocurrió un error al intentar crear la fila: {e}.')
-    else:
-        pass
 
-    if table_name == 'productos':
+    elif table_name == 'productos':
         while True:
             read_data('categorias')
-            category = int(input('ID de la categoría del producto: '))
+
+            try:
+                category = int(input('ID de la categoría del producto: '))
+            except Exception as e:
+                print(f'Error al colocar el ID: {e}')
+                return
+
             if not category:
                 print('Debe insertar la categoría obligatoriamente.')
             else: 
@@ -44,7 +37,13 @@ def create_data(table_name, table_id, table_column):
 
         while True:
             read_data('compañias')
-            company = int(input('ID de la compañía del producto: '))
+
+            try:
+                company = int(input('ID de la compañía del producto: '))
+            except Exception as e:
+                print(f'Error al colocar el ID: {e}')
+                return
+
             if not company:
                 print('Debe insertar la compañía obligatoriamente.')
             else: 
@@ -58,34 +57,47 @@ def create_data(table_name, table_id, table_column):
                 break
 
         while True:
-            weight = int(input('Peso del producto (en gramos): '))
+            try:
+                weight = int(input('Peso del producto (en gramos): '))
+            except Exception as e:
+                print(f'Error al colocar el peso del producto: {e}')
+                return
+
             if not weight:
                 print('Debe insertar el peso obligatoriamente.')
             else: 
                 break
 
         while True:
-            stock = int(input('Cantidad del producto: '))
+            try:
+                stock = int(input('Cantidad del producto: '))
+            except Exception as e:
+                print(f'Error al colocar la cantidad del producto: {e}')
+                return
+
             if not stock:
                 print('Debe insertar la cantidad obligatoriamente.')
             else: 
                 break
 
         while True:
-            exp_date = int(input('Fecha de expiración (YYMMDD): '))
+            try: 
+                exp_date = int(input('Fecha de expiración (YYMMDD): '))
+            except Exception as e:
+                print(f'Error al colocar la fecha de expiración: {e}')
+                return
+
             if not exp_date:
                 print('Debe insertar la feca obligatoriamente.')
             else: 
                 break
         
         try:
-            supabase.table(table_name).insert({table_id: new_id('productos', 'id_producto'),'id_categoria': category,'id_compañia': company, table_column: name, 'peso_producto_gramos': weight,'cantidad_stock': stock, 'fecha_exp': exp_date}).execute()
+            supabase.table(table_name).insert({table_id: new_id(table_name, table_id),'id_categoria': category,'id_compañia': company, table_column: name, 'peso_producto_gramos': weight,'cantidad_stock': stock, 'fecha_exp': exp_date}).execute()
 
             print(f'Producto {name} creado con éxito.')
         except Exception as e:
             print(f'Ocurrió un error al intentar crear el producto: {e}.')
-    else:
-        pass
 
 #FUNCIÓN PARA LEER
 def read_data(table_name):
@@ -107,14 +119,14 @@ def update_data(table_name, table_id, table_column):
 
     if table_name != 'productos':
         while True:
-            if table_name == 'compañias':
-                read_data('compañias')
-            if table_name == 'categorias':
-                read_data('categorias')
-            else:
-                pass
+            read_data(table_name)
 
-            id_to_update = int(input('ID a editar: '))
+            try:
+                id_to_update = int(input('ID a editar: '))
+            except Exception as e:
+                print(f'Error al colocar el ID: {e}')
+                return
+
             if not id_to_update:
                 print('Debe insertar un id obligatoriamente.')
             else:
@@ -130,16 +142,20 @@ def update_data(table_name, table_id, table_column):
         try:
             supabase.table(table_name).update({table_column: new_name}).eq(table_id, id_to_update).execute()
 
-            print(f'Fila con el ID: {id_to_update} editado con éxito.')
+            print(f'Fila con el ID: {id_to_update} editada con éxito.')
         except Exception as e:
             print(f'Ocurrió un error al intentar editar la fila: {e}.')
-    else:
-        pass
 
-    if table_name == 'productos':
+    elif table_name == 'productos':
         while True:
             read_data('productos')
-            products_id_to_update = int(input('ID del producto: '))
+
+            try:
+                products_id_to_update = int(input('ID del producto: '))
+            except Exception as e:
+                print(f'Error al colocar el ID: {e}')
+                return
+
             if not products_id_to_update:
                 print('Debe insertar un id obligatoriamente.')
             else:
@@ -147,7 +163,13 @@ def update_data(table_name, table_id, table_column):
         
         while True:
             read_data('categorias')
-            new_category = int(input('ID de la nueva categoría del producto: '))
+
+            try:
+                new_category = int(input('ID de la nueva categoría del producto: '))
+            except Exception as e:
+                print(f'Error al colocar el ID: {e}')
+                return
+
             if not new_category:
                 print('Debe insertar la categoría obligatoriamente.')
             else: 
@@ -155,7 +177,13 @@ def update_data(table_name, table_id, table_column):
 
         while True:
             read_data('compañias')
-            new_company = int(input('ID de la nueva compañía del producto: '))
+
+            try:
+                new_company = int(input('ID de la nueva compañía del producto: '))
+            except Exception as e:
+                print(f'Error al colocar el ID: {e}')
+                return
+
             if not new_company:
                 print('Debe insertar la compañía obligatoriamente.')
             else: 
@@ -169,21 +197,36 @@ def update_data(table_name, table_id, table_column):
                 break
 
         while True:
-            new_weight = int(input('Nuevo peso del producto (en gramos): '))
+            try:
+                new_weight = int(input('Nuevo peso del producto (en gramos): '))
+            except Exception as e:
+                print(f'Error al colocar el peso del producto: {e}')
+                return
+
             if not new_weight:
                 print('Debe insertar el peso obligatoriamente.')
             else:
                 break
         
         while True:
-            new_stock = int(input('Nueva cantidad del producto: '))
+            try:
+                new_stock = int(input('Nueva cantidad del producto: '))
+            except Exception as e:
+                print(f'Error al colocar la cantidad del producto: {e}')
+                return
+
             if not new_stock:
                 print('Debe insertar la cantidad obligatoriamente.')
             else: 
                 break
         
         while True:
-            new_exp_date = int(input('Nueva fecha de expiración (YYMMDD): '))
+            try:
+                new_exp_date = int(input('Nueva fecha de expiración (YYMMDD): '))
+            except Exception as e:
+                print(f'Error al colocar la fecha de expiración: {e}')
+                return
+
             if not new_exp_date:
                 print('Debe insertar la fecha obligatoriamente.')
             else: 
@@ -194,8 +237,6 @@ def update_data(table_name, table_id, table_column):
             print(f'Producto con el ID: {products_id_to_update} editado con éxito.')
         except Exception as e:
             print(f'Ocurrió un error al intentar editar el producto: {e}.')
-    else:
-        pass
 
 #FUNCIÓN PARA ELIMINAR
 def delete_data(table_name, table_id):
@@ -213,7 +254,10 @@ def delete_data(table_name, table_id):
             print('Respuesta no válida. Por favor introduzca "si" o "no".')
 
     while True:
-        id_to_delete = input('ID a eliminar: ')
+        try:
+            id_to_delete = int(input('ID a eliminar: '))
+        except Exception as e:
+                print(f'Error al colocar el ID: {e}')
 
         if not id_to_delete:
             print('Debe insertar un id obligatoriamente.')
