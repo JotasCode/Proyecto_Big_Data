@@ -6,7 +6,7 @@ load_dotenv()
 
 def menu():
     print('-' * 60)
-    print('---------- Almacén Atlántida ----------')
+    print('Programa de registro de inventario.')
 
     while True:
         print('---------- Tablas ----------')
@@ -43,7 +43,7 @@ def menu():
                 elif companys_selection == '4':
                     delete_data(os.environ.get('TABLE_1'), os.environ.get('TABLE_1_ID'))
                 elif companys_selection == '5':
-                    to_csv(os.environ.get('TABLE_1'))
+                    to_csv(os.environ.get('TABLE_1'), os.environ.get('TABLE_1_FILE'))
                 elif companys_selection == '6':
                     print('-' * 60)
                     print('Saliendo del registro de compañías.')
@@ -76,7 +76,7 @@ def menu():
                 elif categorys_selection == '4':
                     delete_data(os.environ.get('TABLE_2'), os.environ.get('TABLE_2_ID'))
                 elif categorys_selection == '5':
-                    to_csv(os.environ.get('TABLE_2'))
+                    to_csv(os.environ.get('TABLE_2'), os.environ.get('TABLE_2_FILE'))
                 elif categorys_selection == '6':
                     print('-' * 60)
                     print('Saliendo del registro de categorías.')
@@ -109,7 +109,7 @@ def menu():
                 elif products_selection == '4':
                     delete_data(os.environ.get('TABLE_3'), os.environ.get('TABLE_3_ID'))
                 elif products_selection == '5':
-                    to_csv(os.environ.get('TABLE_3'))
+                    to_csv(os.environ.get('TABLE_3'), os.environ.get('TABLE_3_FILE'))
                 elif products_selection == '6':
                     print('-' * 60)
                     print('Saliendo del registro de productos.')
@@ -122,7 +122,6 @@ def menu():
         elif selection == '4':
             print('-' * 60)
             print('Gracias por utilizar nuestros servicios, hasta la próxima.')
-            print('Almacén Atlántica')
             print('-' * 60)
             break
 
