@@ -21,103 +21,25 @@ def menu():
         selection = input('Por favor seleccione una tabla: ')
 
         if selection == '1':
-            while True:
-                print('---------- Elegiste la tabla de Compañías ----------')
-                print('1. Registrar compañía.')
-                print('2. Ver compañías registradas.')
-                print('3. Editar registro de compañía.')
-                print('4. Eliminar compañía.')
-                print('5. Guardar compañias en un archvo local.')
-                print('-' * 60)
-                print('6. Salir.')
-                print('-' * 60)
-
-                companys_selection = input('Por favor seleccione una opción: ')
-
-                if companys_selection == '1':
-                    create_data(os.environ.get('TABLE_1'), os.environ.get('TABLE_1_ID'), os.environ.get('TABLE_1_COLUMN'))
-                elif companys_selection == '2':
-                    read_data(os.environ.get('TABLE_1'))
-                elif companys_selection == '3':
-                    update_data(os.environ.get('TABLE_1'), os.environ.get('TABLE_1_ID'), os.environ.get('TABLE_1_COLUMN'))
-                elif companys_selection == '4':
-                    delete_data(os.environ.get('TABLE_1'), os.environ.get('TABLE_1_ID'))
-                elif companys_selection == '5':
-                    to_csv(os.environ.get('TABLE_1'), os.environ.get('TABLE_1_FILE'))
-                elif companys_selection == '6':
-                    print('-' * 60)
-                    print('Saliendo del registro de compañías.')
-                    print('-' * 60)
-                    break
-                else:
-                    print('-' * 60)
-                    print('Opción invalida. Seleccione el número de la opción que desea elegir.')
+            selection = 'compañía'
+            selection_table = 'TABLE_1'
+            selection_id = 'TABLE_1_ID'
+            selection_column = 'TABLE_1_COLUMN'
+            break
 
         elif selection == '2':
-            while True:
-                print('---------- Elegiste la tabla de Categorías ----------')
-                print('1. Registrar categoría.')
-                print('2. Ver categorías registradas.')
-                print('3. Editar registro de categoría.')
-                print('4. Eliminar categoría.')
-                print('5. Guardar categorías en un archvo local.')
-                print('-' * 60)
-                print('6. Salir.')
-                print('-' * 60)
-
-                categorys_selection = input('Por favor seleccione una opción: ')
-
-                if categorys_selection == '1':
-                    create_data(os.environ.get('TABLE_2'), os.environ.get('TABLE_2_ID'), os.environ.get('TABLE_2_COLUMN'))
-                elif categorys_selection == '2':
-                    read_data(os.environ.get('TABLE_2'))
-                elif categorys_selection == '3':
-                    update_data(os.environ.get('TABLE_2'), os.environ.get('TABLE_2_ID'), os.environ.get('TABLE_2_COLUMN'))
-                elif categorys_selection == '4':
-                    delete_data(os.environ.get('TABLE_2'), os.environ.get('TABLE_2_ID'))
-                elif categorys_selection == '5':
-                    to_csv(os.environ.get('TABLE_2'), os.environ.get('TABLE_2_FILE'))
-                elif categorys_selection == '6':
-                    print('-' * 60)
-                    print('Saliendo del registro de categorías.')
-                    print('-' * 60)
-                    break
-                else:
-                    print('-' * 60)
-                    print('Opción invalida. Seleccione el número de la opción que desea elegir.')
+            selection = 'categoría'
+            selection_table = 'TABLE_2'
+            selection_id = 'TABLE_2_ID'
+            selection_column = 'TABLE_2_COLUMN'
+            break
 
         elif selection == '3':
-            while True:
-                print('---------- Elegiste la tabla de Productos ----------')
-                print('1. Registrar producto.')
-                print('2. Ver productos registrados.')
-                print('3. Editar registro.')
-                print('4. Eliminar producto.')
-                print('5. Guardar productos en un archvo local.')
-                print('-' * 60)
-                print('6. Salir.')
-                print('-' * 60)
-
-                products_selection = input('Por favor seleccione una opción: ')
-
-                if products_selection == '1':
-                    create_data(os.environ.get('TABLE_3'), os.environ.get('TABLE_3_ID'), os.environ.get('TABLE_3_COLUMN_1'))
-                elif products_selection == '2':
-                    read_data(os.environ.get('TABLE_3'))
-                elif products_selection == '3':
-                    update_data(os.environ.get('TABLE_3'), os.environ.get('TABLE_3_ID'), os.environ.get('TABLE_3_COLUMN_1'))
-                elif products_selection == '4':
-                    delete_data(os.environ.get('TABLE_3'), os.environ.get('TABLE_3_ID'))
-                elif products_selection == '5':
-                    to_csv(os.environ.get('TABLE_3'), os.environ.get('TABLE_3_FILE'))
-                elif products_selection == '6':
-                    print('-' * 60)
-                    print('Saliendo del registro de productos.')
-                    print('-' * 60)
-                    break
-                else:
-                    print('-' * 60)
-                    print('Opción invalida. Seleccione el número de la opción que desea elegir.')
+            selection = 'producto'
+            selection_table = 'TABLE_3'
+            selection_id = 'TABLE_3_ID'
+            selection_column = 'TABLE_3_COLUMN_1'
+            break
 
         elif selection == '4':
             print('-' * 60)
@@ -128,6 +50,38 @@ def menu():
         else:
             print('-' * 60)
             print('Opción invalida. Seleccione el número de la tabla que desea elegir.')
+
+            while True:
+                print('---------- Elegiste la tabla de Compañías ----------')
+                print(f'1. Registrar {selection}.')
+                print('2. Ver registro.')
+                print(f'3. Editar registro de {selection}.')
+                print(f'4. Eliminar {selection}.')
+                print('5. Guardar registro en un archvo local.')
+                print('-' * 60)
+                print('6. Salir.')
+                print('-' * 60)
+
+                selection_2 = input('Por favor seleccione una opción: ')
+
+                if selection_2 == '1':
+                    create_data(os.environ.get(selection_table), os.environ.get(selection_id), os.environ.get(selection_column))
+                elif selection_2 == '2':
+                    read_data(os.environ.get(selection_table))
+                elif selection_2 == '3':
+                    update_data(os.environ.get(selection_table), os.environ.get(selection_id), os.environ.get(selection_column))
+                elif selection_2 == '4':
+                    delete_data(os.environ.get(selection_table), os.environ.get(selection_id))
+                elif selection_2 == '5':
+                    to_csv(os.environ.get(selection_table))
+                elif selection_2 == '6':
+                    print('-' * 60)
+                    print('Saliendo del registro.')
+                    print('-' * 60)
+                    break
+                else:
+                    print('-' * 60)
+                    print('Opción invalida. Seleccione el número de la opción que desea elegir.')
 
 if __name__ == '__main__':
     menu()

@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 load_dotenv()
+import pandas as pd
 from new_id import new_id
 from spb_con import supabase
 
@@ -89,7 +90,8 @@ def read_data(table_name):
         if data_select.data == []:
             print('No hay filas registradas.')
         else:
-            print(data_select)
+            df = pd.DataFrame(data_select.data)
+            print(df.to_string(index=False))
     except Exception as e:
         print(f'Ocurrió un error al intentar ver las filas registradas: {e}')
 
