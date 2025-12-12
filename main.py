@@ -101,11 +101,11 @@ def menu():
                 products_selection = input('Por favor seleccione una opción: ')
 
                 if products_selection == '1':
-                    create_data(os.environ.get('TABLE_3'), os.environ.get('TABLE_3_ID'), os.environ.get('TABLE_3_COLUMN'))
+                    create_data(os.environ.get('TABLE_3'), os.environ.get('TABLE_3_ID'), os.environ.get('TABLE_3_COLUMN_1'))
                 elif products_selection == '2':
                     read_data(os.environ.get('TABLE_3'))
                 elif products_selection == '3':
-                    update_data(os.environ.get('TABLE_3'), os.environ.get('TABLE_3_ID'), os.environ.get('TABLE_3_COLUMN'))
+                    update_data(os.environ.get('TABLE_3'), os.environ.get('TABLE_3_ID'), os.environ.get('TABLE_3_COLUMN_1'))
                 elif products_selection == '4':
                     delete_data(os.environ.get('TABLE_3'), os.environ.get('TABLE_3_ID'))
                 elif products_selection == '5':

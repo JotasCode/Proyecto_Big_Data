@@ -1,16 +1,8 @@
 import os
-from supabase import create_client, Client
 from dotenv import load_dotenv
 load_dotenv()
 from new_id import new_id
-
-try:
-    url: str = os.environ.get('SUPABASE_URL')
-    key: str = os.environ.get('SUPABASE_KEY')
-    supabase: Client = create_client(url, key)
-except Exception as e:
-    print(f"Error al inicializar el cliente de Supabase: {e}")
-    exit(1)
+from spb_con import supabase
 
 #FUNCIÓN PARA CREAR
 def create_data(table_name, table_id, table_column):
@@ -79,7 +71,7 @@ def create_data(table_name, table_id, table_column):
                 break
         
         try:
-            supabase.table(table_name).insert({table_id: new_id(os.environ.get('TABLE_3'), os.environ.get('TABLE_3_ID')), os.environ.get('TABLE_2_ID'): category, os.environ.get('TABLE_1_ID'): company, table_column: name, 'peso_producto_gramos': weight,'cantidad_stock': stock, 'fecha_exp': exp_date}).execute()
+            supabase.table(table_name).insert({table_id: new_id(os.environ.get('TABLE_3'), os.environ.get('TABLE_3_ID')), os.environ.get('TABLE_2_ID'): category, os.environ.get('TABLE_1_ID'): company, table_column: name, os.environ.get('TABLE_3_COLUMN_2'): weight, os.environ.get('TABLE_3_COLUMN_2'): stock, os.environ.get('TABLE_3_COLUMN_3'): exp_date}).execute()
 
             print(f'Producto {name} creado con éxito.')
         except Exception as e:
@@ -189,7 +181,7 @@ def update_data(table_name, table_id, table_column):
             else: 
                 break
         try:
-            supabase.table(table_name).update({os.environ.get('TABLE_2_ID'): new_category, os.environ.get('TABLE_1_ID'): new_company, table_column: new_name, 'peso_producto_gramos': new_weight,'cantidad_stock': new_stock,'fecha_exp': new_exp_date}).eq(table_id, products_id_to_update).execute()
+            supabase.table(table_name).update({os.environ.get('TABLE_2_ID'): new_category, os.environ.get('TABLE_1_ID'): new_company, table_column: new_name, os.environ.get('TABLE_3_COLUMN_2'): new_weight, os.environ.get('TABLE_3_COLUMN_3'): new_stock, os.environ.get('TABLE_3_COLUMN_4'): new_exp_date}).eq(table_id, products_id_to_update).execute()
 
             print(f'Producto con el ID: {products_id_to_update} editado con éxito.')
         except Exception as e:
