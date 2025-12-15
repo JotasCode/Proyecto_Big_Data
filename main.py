@@ -50,7 +50,7 @@ def menu():
 
         else:
             print('-' * 60)
-            print('Opción inválida. Seleccione un número del 1 al 4.')
+            print('Opción inválida. Seleccione el número de la opción que desea elegir.')
             continue 
 
         while True:
@@ -88,7 +88,7 @@ def menu():
                 break
             else:
                 print('-' * 60)
-                print('Opción inválida. Seleccione el número de la opción que desea.')
+                print('Opción inválida. Seleccione el número de la opción que desea elegir.')
 
 if __name__ == '__main__':
     menu()
