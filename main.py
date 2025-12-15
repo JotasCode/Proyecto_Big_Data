@@ -41,7 +41,7 @@ def menu():
             selection_id = 'TABLE_3_ID'
             selection_column = 'TABLE_3_COLUMN_1'
 
-        elif selection_name != None and selection != None:
+        elif selection is None:
             while True:
                 print(f'---------- Elegiste la tabla de {selection_name} ----------')
                 print(f'1. Registrar {selection}.')
