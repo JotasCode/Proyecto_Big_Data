@@ -9,4 +9,3 @@ try:
     supabase: Client = create_client(url, key)
 except Exception as e:
     print(f"Error al inicializar el cliente de Supabase: {e}")
-    exit(1)

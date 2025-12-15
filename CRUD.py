@@ -72,7 +72,7 @@ def create_data(table_name, table_id, table_column):
                 break
         
         try:
-            supabase.table(table_name).insert({table_id: new_id(os.environ.get('TABLE_3'), os.environ.get('TABLE_3_ID')), os.environ.get('TABLE_2_ID'): category, os.environ.get('TABLE_1_ID'): company, table_column: name, os.environ.get('TABLE_3_COLUMN_2'): weight, os.environ.get('TABLE_3_COLUMN_2'): stock, os.environ.get('TABLE_3_COLUMN_3'): exp_date}).execute()
+            supabase.table(table_name).insert({table_id: new_id(os.environ.get('TABLE_3'), os.environ.get('TABLE_3_ID')), os.environ.get('TABLE_2_ID'): category, os.environ.get('TABLE_1_ID'): company, table_column: name, os.environ.get('TABLE_3_COLUMN_2'): weight, os.environ.get('TABLE_3_COLUMN_3'): stock, os.environ.get('TABLE_3_COLUMN_4'): exp_date}).execute()
 
             print(f'Producto {name} creado con éxito.')
         except Exception as e:
