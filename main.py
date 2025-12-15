@@ -22,42 +22,33 @@ def menu():
 
         if selection == '1':
             selection = 'compañía'
+            selection_name = 'compañías'
             selection_table = 'TABLE_1'
             selection_id = 'TABLE_1_ID'
             selection_column = 'TABLE_1_COLUMN'
-            break
 
         elif selection == '2':
             selection = 'categoría'
+            selection_name = 'categorías'
             selection_table = 'TABLE_2'
             selection_id = 'TABLE_2_ID'
             selection_column = 'TABLE_2_COLUMN'
-            break
 
         elif selection == '3':
             selection = 'producto'
+            selection_name = 'productos'
             selection_table = 'TABLE_3'
             selection_id = 'TABLE_3_ID'
             selection_column = 'TABLE_3_COLUMN_1'
-            break
 
-        elif selection == '4':
-            print('-' * 60)
-            print('Gracias por utilizar nuestros servicios, hasta la próxima.')
-            print('-' * 60)
-            break
-
-        else:
-            print('-' * 60)
-            print('Opción invalida. Seleccione el número de la tabla que desea elegir.')
-
+        elif selection_name != None and selection != None:
             while True:
-                print('---------- Elegiste la tabla de Compañías ----------')
+                print(f'---------- Elegiste la tabla de {selection_name} ----------')
                 print(f'1. Registrar {selection}.')
-                print('2. Ver registro.')
+                print(f'2. Ver registro de {selection_name}.')
                 print(f'3. Editar registro de {selection}.')
                 print(f'4. Eliminar {selection}.')
-                print('5. Guardar registro en un archvo local.')
+                print(f'5. Guardar registro de {selection_name} en un archvo local.')
                 print('-' * 60)
                 print('6. Salir.')
                 print('-' * 60)
@@ -76,12 +67,22 @@ def menu():
                     to_csv(os.environ.get(selection_table))
                 elif selection_2 == '6':
                     print('-' * 60)
-                    print('Saliendo del registro.')
+                    print(f'Saliendo del registro de {selection_name}.')
                     print('-' * 60)
                     break
                 else:
                     print('-' * 60)
                     print('Opción invalida. Seleccione el número de la opción que desea elegir.')
+
+        elif selection == '4':
+            print('-' * 60)
+            print('Gracias por utilizar nuestros servicios, hasta la próxima.')
+            print('-' * 60)
+            break
+
+        else:
+            print('-' * 60)
+            print('Opción invalida. Seleccione el número de la opción que desea elegir.')
 
 if __name__ == '__main__':
     menu()

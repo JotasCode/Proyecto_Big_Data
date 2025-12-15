@@ -7,7 +7,7 @@ from spb_con import supabase
 
 #FUNCIÓN PARA CREAR
 def create_data(table_name, table_id, table_column):
-    print(f'---------- Registrando fila en {table_name}----------')
+    print(f'---------- Registrando fila en {table_name} ----------')
 
     if table_name != 'productos':
         while True:
@@ -124,7 +124,9 @@ def update_data(table_name, table_id, table_column):
         try:
             supabase.table(table_name).update({table_column: new_name}).eq(table_id, id_to_update).execute()
 
-            print(f'Fila con el ID: {id_to_update} editado con éxito.')
+            print(f'Fila con el ID: {id_to_update} editada con éxito.')
+
+            read_data(table_name)
         except Exception as e:
             print(f'Ocurrió un error al intentar editar la fila: {e}.')
     else:
@@ -186,6 +188,8 @@ def update_data(table_name, table_id, table_column):
             supabase.table(table_name).update({os.environ.get('TABLE_2_ID'): new_category, os.environ.get('TABLE_1_ID'): new_company, table_column: new_name, os.environ.get('TABLE_3_COLUMN_2'): new_weight, os.environ.get('TABLE_3_COLUMN_3'): new_stock, os.environ.get('TABLE_3_COLUMN_4'): new_exp_date}).eq(table_id, products_id_to_update).execute()
 
             print(f'Producto con el ID: {products_id_to_update} editado con éxito.')
+
+            read_data(table_name)
         except Exception as e:
             print(f'Ocurrió un error al intentar editar el producto: {e}.')
     else:
@@ -207,13 +211,14 @@ def delete_data(table_name, table_id):
             print('Respuesta no válida. Por favor introduzca "si" o "no".')
 
     while True:
+        read_data(table_name)
         id_to_delete = input('ID a eliminar: ')
 
         if not id_to_delete:
             print('Debe insertar un id obligatoriamente.')
         else:
             while True:
-                double_check = input(f'¿Esta seguro(a) de querer elilminar esta fila de {table_name}? (si/no) ')
+                double_check = input(f'¿Esta seguro(a) de querer elilminar la fila con el ID: {id_to_delete} de {table_name}? (si/no) ')
 
                 if double_check == 'no':
                     print('Doble verificación cancelada. Volviendo a la entrada del ID.')
@@ -223,8 +228,10 @@ def delete_data(table_name, table_id):
                         supabase.table(table_name).delete().eq(table_id, id_to_delete).execute()
 
                         print(f'Fila con el ID: {id_to_delete} en {table_name} eliminada con éxito.')
+
+                        read_data(table_name)
                     except Exception as e:
-                         print(f'Ocurrió un error al intentar eliminar esta fila: {e}.')
+                         print(f'Ocurrió un error al intentar eliminar la fila con el ID: {id_to_delete}: {e}.')
                     return
                 else:
                    print('Respuesta no válida. Por favor, introduzca "si" o "no".')
